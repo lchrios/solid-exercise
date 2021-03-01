@@ -1,5 +1,5 @@
 # Expenses
-
+![Arquitectura](./Expenses.png)
 Student is looking for a monthly expense report, please help him to design and code the tool.
 
 For this activity you have to use OOP core concepts and follow SOLID principles.
