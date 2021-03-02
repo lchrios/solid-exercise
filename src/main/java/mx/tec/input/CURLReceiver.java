@@ -1,15 +1,40 @@
 package mx.tec.input;
 
+import java.util.LinkedList;
+
+import mx.tec.entities.Purchase;
+
 public class CURLReceiver implements DataReceiver {
-    public void fetchData () {
-        // CURL fetching sequence
+
+    public String getStudName() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
-    public void sendData () {
+    public String getStudLastName() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public String getStudId() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public String getStudEmail() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public LinkedList<Purchase> getPurchases() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public void finish() {
+        // TODO Auto-generated method stub
 
     }
 
-    public void finish () {
-        // dunno
-    }
+  
 }
