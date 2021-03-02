@@ -1,5 +1,8 @@
 package mx.tec.prefs;
 
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 import mx.tec.utils.InputValidator;
@@ -41,8 +44,12 @@ public class UserPrefences {
     }
 
     public void fetchInputMode () {
-        System.out.print("How do you want to import the data? [ file | url | console ]: ");
+        System.out.print("How do you want to import the data? [ file | url | console (default) ]: ");
         String mode = sc.nextLine();
+        if (mode.equals("")) {
+            setInputMode("console");
+            return;
+        }
         if (InputValidator.validInputMode(mode)) {
             setInputMode(mode);
         } else {
@@ -60,8 +67,12 @@ public class UserPrefences {
     }
 
     public void fetchOutputMode () {
-        System.out.print("How do you want to export the report? [ file | console ]: ");
+        System.out.print("How do you want to export the report? [ file | console (default) ]: ");
         String mode = sc.nextLine();
+        if (mode.equals("")) {
+            setOutputMode("console");
+            return;
+        }
         if (InputValidator.validInputMode(mode)) {
             setOutputMode(mode);
         } else {
@@ -92,8 +103,13 @@ public class UserPrefences {
     }
 
     public void fetchFileName () {
-        System.out.print("How do you want to name the report?: ");
-        setFileName(sc.nextLine());
+        System.out.print("How do you want to name the report? (default: report.txt): ");
+        String file_name = sc.nextLine();
+        if (file_name.equals("")){
+            setFileName("report.txt");
+        } else {
+            setFileName(file_name);
+        }
     }
 
     public String getFileName() {
@@ -105,13 +121,19 @@ public class UserPrefences {
     }
 
     public void fetchMonth () {
-        System.out.print("Months:\n[ 0 - Jan | 1 - Feb | 2 - Mar | 3 - Apr ]\n[ 4 - May | 5 - Jun | 6 - Jul | 7 - Aug ]\n[ 8 - Sep | 9 - Oct | 10 - Nov | 11 - Dec ]\nSelect month to analyze (number): ");
-        int month = Integer.valueOf(sc.nextLine());
-        if (0 <= month && month <= 11) {
-            setMonth(month);
+        System.out.print("Months:\n[ 0 - Jan | 1 - Feb | 2 - Mar | 3 - Apr ]\n[ 4 - May | 5 - Jun | 6 - Jul | 7 - Aug ]\n[ 8 - Sep | 9 - Oct | 10 - Nov | 11 - Dec ]\nSelect month to analyze (number) (default: current month): ");
+        String month_str = sc.nextLine();
+        LocalDate d8 = LocalDate.now();
+        if (month_str.equals("")) {
+            setMonth(d8.getMonthValue() - 1);
         } else {
-            System.out.print("Invalid month\nValid ");
-            fetchMonth();
+            int month = Integer.valueOf(month_str);
+            if (0 <= month && month <= 11) {
+                setMonth(month);
+            } else {
+                System.out.print("Invalid month\nValid ");
+                fetchMonth();
+            }
         }
     }
 

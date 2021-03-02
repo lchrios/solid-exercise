@@ -59,6 +59,7 @@ public class Main {
 
         // * 5 Ask user output form
         prefs.fetchOutputMode();
+        // TODO: Ask user output currency
 
         // * 6 Output information
         String out_mode = prefs.getOutputMode();
@@ -70,7 +71,7 @@ public class Main {
             prefs.fetchFileName();
             output = new FileOutput(prefs);
         }
-        output.display(report);
+        output.display(report, prefs);
         
     }
 }

@@ -2,6 +2,8 @@ package mx.tec.input;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -17,23 +19,23 @@ public class CLIReceiver implements DataReceiver {
     }
 
     public String getStudName() {
-        System.out.print("Name:");
+        System.out.print("Name: ");
         return sc.nextLine();
 
     }
 
     public String getStudLastName() {
-        System.out.print("Last name:");
+        System.out.print("Last name: ");
         return sc.nextLine();
     }
 
     public String getStudId() {
-        System.out.print("ID:");
+        System.out.print("ID: ");
         return sc.nextLine();
     }
 
     public String getStudEmail() {
-        System.out.print("Email:");
+        System.out.print("Email: ");
         return sc.nextLine();
     }
 
@@ -105,8 +107,12 @@ public class CLIReceiver implements DataReceiver {
     
     
     public String getPurchDate() {
-        System.out.print("date (dd/MM/yyyy): ");
+        System.out.print("date (dd/MM/yyyy) (default: today's date): ");
         String date = sc.nextLine();
+        if (date.equals("")) {
+            String[] raw_date = LocalDate.now().toString().split("-");
+            return raw_date[1] + "-" + raw_date[2] + "-" + raw_date[0];
+        }
         dateFormat.setLenient(false);
         try {
             dateFormat.parse(date.trim());
@@ -122,8 +128,6 @@ public class CLIReceiver implements DataReceiver {
     public LinkedList<Purchase> getPurchases() {
         System.out.println("Input the purchases data as follows.");
         
-        
-
         LinkedList<Purchase> purchases = new LinkedList<Purchase>();
 
         num_prod = getPurchNum();
@@ -131,6 +135,8 @@ public class CLIReceiver implements DataReceiver {
         for (int i = 0; i < num_prod; i++) {
             String type, name, currency, receiver, date;
             double price;
+
+            System.out.printf("====== Purchase %d ======\n", i+1);
 
             type = getPurchType();
             name = getPurchName();
