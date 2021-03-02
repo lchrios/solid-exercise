@@ -1,0 +1,7 @@
+Purchases of today 03-02-2021: 1
+diler with total of $1200.0
+
+Min purchase of the month: diler $1200.0
+Max purchase of the month: diler $1200.0
+Average purchases amount: $1200.0
+Frequent receiver: diler
