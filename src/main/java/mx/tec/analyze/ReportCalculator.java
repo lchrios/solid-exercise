@@ -101,7 +101,7 @@ public class ReportCalculator {
         boolean has_max_rec = false;
 
         for (int i = 0; i < rec.length; i++) {
-            if ((receivers.containsValue(month.getMaxRecNum()) || receivers.get(rec[i]) == month.getMaxRecNum()) && month.getMaxRecNum() > 0) {
+            if (receivers.get(rec[i]).equals(month.getMaxRecNum()) && month.getMaxRecNum() > 0) {
                 res = res.concat(rec[i].toString() + ", ");
                 has_max_rec = true;
             }
