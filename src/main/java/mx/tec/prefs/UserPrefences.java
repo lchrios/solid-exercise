@@ -75,7 +75,7 @@ public class UserPrefences {
             setOutputMode("console");
             return;
         }
-        if (InputValidator.validInputMode(mode)) {
+        if (InputValidator.validOutputMode(mode)) {
             setOutputMode(mode);
         } else {
             System.out.println("Invalid output form\nValid outputs : [ file | console ]");
