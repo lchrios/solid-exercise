@@ -1,5 +1,46 @@
 # Expenses
 ![Arquitectura](./Expenses.png)
+
+## Architecture Explanation
+
+The main program is the one which runs evey other module who is in charge of every individual task and the main is the one coordinating those subtasks and its results through the implementation of polymorphism in different modules.
+
+The `UserPreferences` class has the task to store and ask for every user input related to input or output preferences such as input mode (CLI, URL or File), output mode (Console or File) among others like output currency. It implements a very simple `InputValidator` to valide whether the inputs that `UserPreferences` receives are correct. One thing I would like to remark is that by typing only ``ENTER`` sets for you a the default value which is displayed on promt inout. 
+
+Then, the `DataReceiver` interface is the one that depending on the user's input instantiates as one of the three classes that implement this, suuch classes are the following:
+
+1. ``CLIReceiver``
+    - The `input` is asked through command-line in an specific order.
+3. ``FileReceiver``
+    - `UserPreferences` asks for the file source containing the JSON formated data.
+    - Reads the information the file contains and parse it into JSONOBject which is stored for further use.  
+5. ``CURLReceiver``
+    - `UserPreferences` asks for the URL endpoint for the JSON formated data response.
+    - Reads the information the response contains and parse it into JSONOBject which is stored for further use.
+d
+We need to understand the `Entities` classes as I denominated them, these are data structures to contain the parsed information received from the `DataReceiver`. these classes are: 
+    - ``Purchase``: Contains the information of a single purchase.
+    - ``Student``: Contains the information of the student and a `LinkedList` of `Purchase` to contain the purchases' data.
+    - ``MonthReport``: Contains a `LinkedList` of `Purchase` found from that month, max and min purchases and a receiver Map containing the times a receiver has been bought to in that specific month. 
+
+For the calculations, a `Student` is instatiated and gets fed the data from the `DataReceiver` implemened class. After that `Student` is filled with the parsed information is then passed as an argument to create a new `ReportCalculator` instance with that `Student` and generates a `MonthReport` for each month and a `LinkedList` of today's purchases.
+
+After calculations are done, `UserPreferences` asks for the currency format for the output and after its correctly inputed it asks now for the output mode. The Main process asks to the output to display the information which asks for the `String` output the `ReportCalculator`'s `summary` function returns. So inside that function is where the result string is constructed and this consturction uses the values that are passed through the `CurrencyConverter` instance that depend on the user input. There are 3 different classes implemented for the `CurrencyConverter` interface. These are:
+
+1. ``MXNtoBRL``
+2. ``MXNtoMXN`` (returns the same value)
+3. ``MXNtoUSD``
+
+After this explanation now we get to the part where the `DataOutput` interface implements one of the two following classes:
+
+1. ``CLIOutput`` 
+    - Prints the `ReportCalculator` summary `String` output to the console-line.
+2. ``FileOutput``
+    - `UserPreferences` asks the user for the file output name.
+    - Writes the `ReportCalculator` summary `String` output to the file output.
+
+## Problem Explanation
+
 Student is looking for a monthly expense report, please help him to design and code the tool.
 
 For this activity you have to use OOP core concepts and follow SOLID principles.
