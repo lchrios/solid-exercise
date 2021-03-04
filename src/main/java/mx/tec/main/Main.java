@@ -57,9 +57,9 @@ public class Main {
         // * 4 - Ask user month to report
         prefs.fetchMonth();
 
-        // * 5 Ask user output form
-        prefs.fetchOutputMode();
+        // * 5 Ask user currency and output form
         prefs.fetchCurrency();
+        prefs.fetchOutputMode();
 
         // * 6 Output information
         String out_mode = prefs.getOutputMode();
