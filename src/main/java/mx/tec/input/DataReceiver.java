@@ -5,16 +5,30 @@ import java.util.LinkedList;
 import mx.tec.entities.Purchase;
 
 public interface DataReceiver {
-    String getStudName();
+    public String getStudName();
 
-    String getStudLastName();
+    public String getStudLastName();
     
-    String getStudId();
+    public String getStudId();
 
-    String getStudEmail();
+    public String getStudEmail();
 
-    LinkedList<Purchase> getPurchases();
+    public String getPurchType();
 
-    void finish();
+    public String getPurchName();
+
+    public String getPurchCurrency();
+
+    public int getPurchNum();
+
+    public double getPurchPrice();
+
+    public String getPurchReceiver();
+    
+    public String getPurchDate();
+
+    public LinkedList<Purchase> getPurchases();
+
+    public void finish();
 
 }

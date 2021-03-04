@@ -16,3 +16,4 @@ log/
 gradlew
 gradlew.bat
 gradle
+*.txt

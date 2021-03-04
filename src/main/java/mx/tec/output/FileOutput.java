@@ -36,7 +36,6 @@ public class FileOutput implements DataOutput {
             fw.write(report.summarize(prefs));
             fw.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

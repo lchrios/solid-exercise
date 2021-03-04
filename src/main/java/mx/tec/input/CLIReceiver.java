@@ -3,7 +3,6 @@ package mx.tec.input;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -111,7 +110,7 @@ public class CLIReceiver implements DataReceiver {
         String date = sc.nextLine();
         if (date.equals("")) {
             String[] raw_date = LocalDate.now().toString().split("-");
-            return raw_date[1] + "-" + raw_date[2] + "-" + raw_date[0];
+            return raw_date[1] + "/" + raw_date[2] + "/" + raw_date[0];
         }
         dateFormat.setLenient(false);
         try {
@@ -140,7 +139,7 @@ public class CLIReceiver implements DataReceiver {
 
             type = getPurchType();
             name = getPurchName();
-            currency = getPurchCurrency();
+            currency = "mxn";
             price = getPurchPrice();
             receiver = getPurchReceiver();
             date = getPurchDate();
@@ -153,6 +152,5 @@ public class CLIReceiver implements DataReceiver {
 
     public void finish() {
         System.out.println("Total de compras capturadas: " + this.num_prod);
-
     }
 }

@@ -10,10 +10,12 @@ public class MonthReport {
     private Map<String, Integer> receivers;
     private Purchase maxPurch, minPurch;
     private double average;
+    int max_rec_num;
 
     public MonthReport() {
         this.purchases = new LinkedList<Purchase>();
         this.receivers = new HashMap<String, Integer>();
+        this.max_rec_num = 0;
     }
 
     public void finish() {
@@ -39,7 +41,13 @@ public class MonthReport {
         if (this.receivers.containsKey(purch.getReceiver())) {
             this.receivers.put(purch.getReceiver(), this.receivers.get(purch.getReceiver()) + 1);
         } else {
-            this.receivers.put(purch.getReceiver(), 0);
+            this.receivers.put(purch.getReceiver(), 1);
+        }
+
+        // * update max_receiver field
+        if (this.receivers.get(purch.getReceiver()) > max_rec_num || max_rec_num == 0) {
+            System.out.println("Nuevo receiver maximo encontrado");
+            this.max_rec_num += 1;
         }
 
         this.purchases.add(purch);
@@ -63,6 +71,10 @@ public class MonthReport {
 
     public LinkedList<Purchase> getPurchases() {
         return purchases;
+    }
+
+    public int getMaxRecNum() {
+        return max_rec_num;
     }
 
 }

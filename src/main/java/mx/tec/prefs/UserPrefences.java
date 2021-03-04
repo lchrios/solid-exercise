@@ -1,8 +1,6 @@
 package mx.tec.prefs;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Scanner;
 
 import mx.tec.utils.InputValidator;
@@ -25,12 +23,16 @@ public class UserPrefences {
 
 
     public void fetchCurrency () {
-        System.out.print("Which currency to display output? [ mxn | usd | brl ]: ");
+        System.out.print("Which currency to display output? [ mxn (default) | usd | brl ]: ");
         String curr = sc.nextLine();
+        if (curr.equals("")) {
+            setCurrency("mxn");
+            return;
+        }
         if (InputValidator.validCurrency(curr)) {
             setCurrency(curr);
         } else {
-            System.out.println("Invalid currency type\nValid currencies: [mxn, usd, brl]");
+            System.out.println("Invalid currency type\nValid currencies: [ mxn | usd | brl ]");
             fetchCurrency();
         }
     }
@@ -90,8 +92,13 @@ public class UserPrefences {
     }
 
     public void fetchSource () {
-        System.out.print("From where do we fetch your data?: ");
-        setSource(sc.nextLine());
+        System.out.print("From where do we fetch your data? (default: data.json): ");
+        String src = sc.nextLine();
+        if (src.equals("")) {
+            setSource("data.json");
+        } else {
+            setSource(src);
+        }
     }
 
     public String getSource() {

@@ -8,6 +8,10 @@ import mx.tec.entities.MonthReport;
 import mx.tec.entities.Purchase;
 import mx.tec.entities.Student;
 import mx.tec.prefs.UserPrefences;
+import mx.tec.utils.CurrencyConverter;
+import mx.tec.utils.MXNtoBRL;
+import mx.tec.utils.MXNtoMXN;
+import mx.tec.utils.MXNtoUSD;
 
 public class ReportCalculator {
 
@@ -29,7 +33,7 @@ public class ReportCalculator {
         this.stud = stud;
 
         String[] raw_date = LocalDate.now().toString().split("-");         
-        this.today_date_str = raw_date[1] + "-" + raw_date[2] + "-" + raw_date[0];
+        this.today_date_str = raw_date[1] + "/" + raw_date[2] + "/" + raw_date[0];
         this.calculate();
     }
 
@@ -48,8 +52,8 @@ public class ReportCalculator {
             }
 
             // * 2 - Add it to its respective month
-            String month_str = prod.getDate().split("-")[1];
-            this.months[Integer.valueOf(month_str)].addPurchase(prod);   
+            String month_str = prod.getDate().split("/")[1];
+            this.months[Integer.valueOf(month_str) - 1].addPurchase(prod);   
         }
 
         for (int i = 0; i < 12; i++){
@@ -58,30 +62,51 @@ public class ReportCalculator {
     }
 
     public String summarize(UserPrefences prefs) {
+        // - Month's info
+        MonthReport month = this.months[prefs.getMonth()];
+        Purchase min = month.getMinPurch(), max = month.getMaxPurch();
+
+        CurrencyConverter converter;
+
+        if (prefs.getCurrency().equals("mxn")) {
+            converter = new MXNtoMXN();
+        } else if (prefs.getCurrency().equals("usd")) {
+            converter = new MXNtoUSD();
+        } else {
+            converter = new MXNtoBRL();
+        }
         String res = "";
 
         // - Today's purchases
         res = res.concat("Purchases of today " + this.today_date_str + ": " + this.today_purch_list.size() + "\n");
         for (Purchase prod : this.today_purch_list) {
-            res = res.concat(prod.getReceiver() + " with total of $" + prod.getPrice() + "\n");
+            double price = converter.convert(prod.getPrice());
+            res = res.concat(prod.getReceiver() + " with total of $" + price + " " + prefs.getCurrency() + "\n");
         }
         res = res.concat("\n");
 
-        // - Month's info
-        MonthReport month = this.months[prefs.getMonth()];
-        Purchase min = month.getMinPurch(), max = month.getMaxPurch();
-        res = res.concat("Min purchase of the month: " + min.getReceiver() + " $" + min.getPrice() + "\n");
-        res = res.concat("Max purchase of the month: " + max.getReceiver() + " $" + max.getPrice() + "\n");
-        res = res.concat("Average purchases amount: $" + month.getAverage() + "\n");
+        
+
+        double minPrice = converter.convert(min.getPrice());
+        double maxPrice = converter.convert(max.getPrice());
+        double average = converter.convert(month.getAverage());
+
+
+        res = res.concat("Min purchase of the month: " + min.getReceiver() + " $" + minPrice + " " + prefs.getCurrency() + "\n");
+        res = res.concat("Max purchase of the month: " + max.getReceiver() + " $" + maxPrice + " " + prefs.getCurrency() + "\n");
+        res = res.concat("Average purchases amount: $" + average + " " + prefs.getCurrency() + "\n");
         res = res.concat("Frequent receiver: ");
         Map<String, Integer> receivers = month.getReceivers();
         Object[] rec = receivers.keySet().toArray();
+        boolean has_max_rec = false;
 
         for (int i = 0; i < rec.length; i++) {
-            res = res.concat(rec[i].toString() + ", ");
+            if ((receivers.containsValue(month.getMaxRecNum()) || receivers.get(rec[i]) == month.getMaxRecNum()) && month.getMaxRecNum() > 0) {
+                res = res.concat(rec[i].toString() + ", ");
+                has_max_rec = true;
+            }
         }
-        res = res.substring(0, res.length() - 2);
 
-        return res;
+        return has_max_rec ? res.substring(0, res.length() - 2) : res;
     }
 }

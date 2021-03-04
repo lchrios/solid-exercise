@@ -1,0 +1,40 @@
+{
+    "name": "Christopher",
+    "lastname": "Ortega",
+    "id": "A01634500",
+    "email": "a01634500@itesm.mx",
+    "purchases":[
+        {
+             "type":"General",
+             "name":"Gasoline",
+             "price":750.00,
+             "currency":"MXN",
+             "receiver": "PEMEX",
+             "date": "03/03/2021"
+        },
+        {
+            "type":"Fixed",
+             "name":"Minecraft Server Hosting",
+             "price":350.00,
+             "currency":"MXN",
+             "receiver": "Hosting",
+             "date": "12/02/2021"
+        },
+        {
+             "type":"General",
+             "name":"Audifonos",
+             "price":2300.00,
+             "currency":"MXN",
+             "receiver": "Amazon",
+             "date": "03/03/2021"
+        },
+        {
+             "type":"General",
+             "name":"Mouse",
+             "price": 1000.00,
+             "currency":"MXN",
+             "receiver": "Amazon",
+             "date": "03/03/2021"
+        }
+    ]
+} 

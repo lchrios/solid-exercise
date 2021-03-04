@@ -37,7 +37,7 @@ public class Main {
         // * 2 - Fetch all data depending on the mode and save to student
         String in_mode = prefs.getInputMode();
         if (in_mode.equals("file")) {
-            input = new FileReceiver();
+            input = new FileReceiver(prefs);
         } else if (in_mode.equals("url")) {
             input = new CURLReceiver();
 
@@ -59,7 +59,7 @@ public class Main {
 
         // * 5 Ask user output form
         prefs.fetchOutputMode();
-        // TODO: Ask user output currency
+        prefs.fetchCurrency();
 
         // * 6 Output information
         String out_mode = prefs.getOutputMode();
@@ -68,7 +68,6 @@ public class Main {
             output = new CLIOutput();
             
         } else if (out_mode.equals("file")) {
-            prefs.fetchFileName();
             output = new FileOutput(prefs);
         }
         output.display(report, prefs);
