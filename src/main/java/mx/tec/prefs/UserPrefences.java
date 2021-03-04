@@ -92,13 +92,9 @@ public class UserPrefences {
     }
 
     public void fetchSource () {
-        System.out.print("From where do we fetch your data? (default: data.json): ");
+        System.out.print("From where do we fetch your data?" + (this.inputMode.equals("file") ? " (default: data.json)" : "\n(default: https://jsonblob.com/api/jsonBlob/124bbc39-7562-11eb-b01b-3ba7ac66d7b0)") + ": ");
         String src = sc.nextLine();
-        if (src.equals("")) {
-            setSource("data.json");
-        } else {
-            setSource(src);
-        }
+        setSource(src.equals("") ? (this.inputMode.equals("file") ? "data.json" : "https://jsonblob.com/api/jsonBlob/124bbc39-7562-11eb-b01b-3ba7ac66d7b0") : src);
     }
 
     public String getSource() {

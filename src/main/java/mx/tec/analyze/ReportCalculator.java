@@ -86,14 +86,15 @@ public class ReportCalculator {
         res = res.concat("\n");
 
         
-
-        double minPrice = converter.convert(min.getPrice());
-        double maxPrice = converter.convert(max.getPrice());
+        String minReceiver = min != null ? min.getReceiver() : "No purchase this month";
+        String maxReceiver = max != null ? max.getReceiver() : "No purchase this month";
+        double minPrice = converter.convert(min != null ? min.getPrice() : 0);
+        double maxPrice = converter.convert(max != null ? max.getPrice() : 0);
         double average = converter.convert(month.getAverage());
 
 
-        res = res.concat("Min purchase of the month: " + min.getReceiver() + " $" + minPrice + " " + prefs.getCurrency() + "\n");
-        res = res.concat("Max purchase of the month: " + max.getReceiver() + " $" + maxPrice + " " + prefs.getCurrency() + "\n");
+        res = res.concat("Min purchase of the month: " + minReceiver + " $" + minPrice + " " + prefs.getCurrency() + "\n");
+        res = res.concat("Max purchase of the month: " + maxReceiver + " $" + maxPrice + " " + prefs.getCurrency() + "\n");
         res = res.concat("Average purchases amount: $" + average + " " + prefs.getCurrency() + "\n");
         res = res.concat("Frequent receiver: ");
         Map<String, Integer> receivers = month.getReceivers();
@@ -107,6 +108,6 @@ public class ReportCalculator {
             }
         }
 
-        return has_max_rec ? res.substring(0, res.length() - 2) : res;
+        return has_max_rec ? res.substring(0, res.length() - 2) : res.concat("No purchases this month.");
     }
 }

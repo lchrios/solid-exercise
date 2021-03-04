@@ -39,7 +39,7 @@ public class Main {
         if (in_mode.equals("file")) {
             input = new FileReceiver(prefs);
         } else if (in_mode.equals("url")) {
-            input = new CURLReceiver();
+            input = new CURLReceiver(prefs);
 
         } else if (in_mode.equals("console")) {
             input = new CLIReceiver();

@@ -23,7 +23,7 @@ public class MonthReport {
         for (Purchase prod : this.purchases) {
             cnt += prod.getPrice();
         }
-        this.average = cnt / this.purchases.size();
+        this.average = this.purchases.size() != 0 ? cnt / this.purchases.size() : 0;
     }
 
     public void addPurchase(Purchase purch) {
@@ -46,7 +46,6 @@ public class MonthReport {
 
         // * update max_receiver field
         if (this.receivers.get(purch.getReceiver()) > max_rec_num || max_rec_num == 0) {
-            System.out.println("Nuevo receiver maximo encontrado");
             this.max_rec_num += 1;
         }
 
